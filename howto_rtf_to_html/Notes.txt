@@ -1,0 +1,11 @@
+The most recent version of this function is available at:
+
+    http://www2.bitstream.net/~bradyh/downloads/rtf2html.zip
+
+You can find more information at:
+
+    http://www2.bitstream.net/~bradyh/downloads/rtf2htmlrm.html
+
+If you find some text that this function doesn't convert properly, please email:
+
+    bradyh@bitstream.net
