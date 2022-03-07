@@ -1,0 +1,52 @@
+        #region ** CallingThread, WaitUntilComplete, CenterLoading **
+
+        private void CallingThread(Action methodName)
+        {
+            try
+            {
+                TaskbarProgress.SetState(Handle, TaskbarProgress.TaskbarStates.Indeterminate);
+                CenterLoading(lblMsg);
+                panelPreview.Enabled = false;
+                lblMsg.Visible = true;
+                lblMsg.BringToFront();
+                string msg = string.Empty;
+                thread = new Thread((ThreadStart)delegate { methodName(); });
+                thread.Start();
+                WaitUntilComplete_Thread();
+                panelPreview.Enabled = true;
+                TaskbarProgress.SetState(Handle, TaskbarProgress.TaskbarStates.NoProgress);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void FrmMain_Resize(object sender, EventArgs e)
+        {
+            CenterLoading(lblMsg);
+            //SetGridSize();
+            Refresh();
+        }
+
+        private void CenterLoading(Control ctrl)
+        {
+            int fWidth = Width / 2 - ctrl.Width / 2;
+            int fHeight = Height / 2 - ctrl.Height / 2;
+
+            ctrl.Location = new Point(fWidth, fHeight);
+        }
+
+        private void WaitUntilComplete_Thread()
+        {
+            if (thread != null)
+            {
+                do
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(1);
+                } while (thread.IsAlive);
+            }
+        }
+
+        #endregion
